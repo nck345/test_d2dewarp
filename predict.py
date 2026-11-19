@@ -104,7 +104,10 @@ def main():
         d_model=args.d_model
     ).to(device)
 
-    checkpoint = torch.load(args.model_path, map_location=device)
+    try:
+        checkpoint = torch.load(args.model_path, map_location=device, weights_only=False)
+    except TypeError:
+        checkpoint = torch.load(args.model_path, map_location=device)
     state_dict = checkpoint['state_dict'] if isinstance(checkpoint, dict) and 'state_dict' in checkpoint else checkpoint
     model_dict = recti_model.state_dict()
     new_state_dict = {}

@@ -30,7 +30,10 @@ def load_checkpoint(model, model_path, dev):
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Checkpoint not found at: {model_path}")
 
-    checkpoint = torch.load(model_path, map_location=dev)
+    try:
+        checkpoint = torch.load(model_path, map_location=dev, weights_only=False)
+    except TypeError:
+        checkpoint = torch.load(model_path, map_location=dev)
     if isinstance(checkpoint, dict):
         if 'state_dict' in checkpoint:
             state_dict = checkpoint['state_dict']
