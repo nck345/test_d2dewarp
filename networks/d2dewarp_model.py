@@ -3,7 +3,10 @@ import os
 import torch
 import torch.nn as nn
 
-from thop import profile, clever_format
+try:
+    from thop import profile, clever_format
+except ImportError:
+    profile, clever_format = None, None
 from model_utils.dewarp_utils import DewarpUP
 from model_utils.utils_model import CAM_Module
 from networks.cross_attn import SelfAttention

@@ -11,7 +11,10 @@ import numpy as np
 np.set_printoptions(threshold=np.inf)
 import torch
 from torch.utils.data import Dataset, DataLoader
-import hdf5storage as h5
+try:
+    import hdf5storage as h5
+except ImportError:
+    h5 = None
 import random
 from PIL import ImageFilter, Image
 import torchvision.transforms as transforms
